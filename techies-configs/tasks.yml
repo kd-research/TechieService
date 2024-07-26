@@ -1,0 +1,16 @@
+_task_common: &task_common
+  human_input: false
+  async_execution: false
+
+
+game_hierarchy_assembling_2: 
+  <<: *task_common
+  agent: hierarchy_assembler
+  description: >
+    List existing files in the working directory. Read all files to understand the game hierarchy.
+    Create a unified game hierarchy from the files.
+  expected_output: >
+    Your final answer should be a single json object that represents the game hierarchy.
+  output_file: game_hierarchy.json
+  depend_on:
+    - game_hierarchy_representation

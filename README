@@ -1,0 +1,6 @@
+Run python server.py to start server.
+
+Using modified version of hierarchy and code crew (optional):
+
+unset TECHIES_RUNTIME
+export TECHIES_RUNTIME="$(techies get_runtime_path):`pwd`"

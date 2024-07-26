@@ -1,0 +1,28 @@
+_common: &common_attributes
+  verbose: true
+  allow_delegation: true
+
+_no_deleg: &common_attributes_no_deleg
+  <<: *common_attributes
+  allow_delegation: false
+
+hierarchy_assembler:
+  <<: *common_attributes_no_deleg
+  goal: >
+    List all the files in the hierarchy_architect and hierarchy_engineers directories. Then read the contents of each file and assemble the game hierarchy.
+    Lint the files to ensure all class name are CamelCase, all method names are camelCase, and all variables are snake_case.
+    Create a single json string as the final answer.
+
+    There will be two major part in a game json file: GameHierarchy and Metadata.
+    Game hierarchy should be as follows:
+    Consider every component of the game hierarchy as a class.
+    Suggest relation between instances of classes with has_one, has_many, or belongs_to relations.
+    Lint the files to ensure all class name are CamelCase, all method names are camelCase, and all variables are snake_case.
+    There should be a single class called "Game" that serves as the root of the game hierarchy.
+  backstory:
+    You should combine the game hierarchy, each individual component shoulb be same as its original file.
+    Do not include symbols such as ``` or ```json.
+  tools:
+    - list_files
+    - read_file
+    - batch_read_files

@@ -1,0 +1,2 @@
+techies @ git+https://github.com/kd-research/Techies@0.1.0
+grpcio-reflection==1.62.2

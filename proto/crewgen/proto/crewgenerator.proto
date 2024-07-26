@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package crewgen;
+
+message GenerateHtmlGameRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message GenerateHtmlGameResponse {
+  FileResponse html = 1;
+}
+
+message FileResponse {
+  bytes data = 1;
+}
+
+service CrewGenerator {
+  rpc GenerateHtmlGame(GenerateHtmlGameRequest) returns (GenerateHtmlGameResponse);
+}
