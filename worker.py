@@ -4,7 +4,7 @@ from os import path
 from subprocess import run, DEVNULL
 from tempfile import TemporaryDirectory
 
-def do_work():
+def llm_work(description):
     # Modify this function only
     from techies import cli as techies_cli
 
@@ -24,11 +24,9 @@ def do_work():
 def generate_game_html(description):
     cwd = os.getcwd()
     try:
-
         with TemporaryDirectory() as temp_dir:
             os.chdir(temp_dir)
-
-        data = llm_work()
+            data = llm_work(description)
     finally:
         os.chdir(cwd)
 
