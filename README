@@ -1,6 +1,11 @@
-Run python server.py to start server.
+Run python server.py to start server. Require enviroment variables OPENAI_API_KEY and AGENTOPS_API_KEY to be set.
 
-Using modified version of hierarchy and code crew (optional):
+## (optional) Using modified version of hierarchy and code crew
 
 unset TECHIES_RUNTIME
 export TECHIES_RUNTIME="$(techies get_runtime_path):`pwd`"
+
+## Running techies service in docker
+
+docker build -t techie-service .
+docker run -it --rm -p 9452:9452 -e OPENAI_API_KEY=$OPENAI_API_KEY -e AGENTOPS_API_KEY=$AGENTOPS_API_KEY techie-service
