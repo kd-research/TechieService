@@ -1,5 +1,5 @@
 # Use an official Ubuntu base image
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS base
 
 # Set environment variables
 ENV RUBY_VERSION=3.3.3
@@ -60,8 +60,14 @@ RUN ruby -v && python3.12 --version
 # Set up a working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+FROM base AS python_server
+
+COPY requirements.lock /app
+
+RUN $PYTHON -m pip install --upgrade pip \
+    && $PYTHON -m pip install -r requirements.lock
+
 COPY . /app
 
-# Set the default command to run when starting the container
-CMD ["bash"]
+ENTRYPOINT ["bash", "-lc"]
+CMD ["./serve.sh"]
