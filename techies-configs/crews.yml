@@ -9,7 +9,5 @@ hierarchy_crew_minor:
     - hierarchy_architect
     - hierarchy_entity_engineer
     - hierarchy_manager_engineer
-    - hierarchy_assembler
   tasks:
     - game_hierarchy_representation
-    - game_hierarchy_assembling_2

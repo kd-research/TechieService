@@ -69,5 +69,6 @@ RUN $PYTHON -m pip install --upgrade pip \
 
 COPY . /app
 
-ENTRYPOINT ["bash", "-lc"]
+EXPOSE 9452
+ENTRYPOINT ["bash", "-l", "-c"]
 CMD ["./serve.sh"]
