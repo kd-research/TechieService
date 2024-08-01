@@ -8,7 +8,7 @@ def llm_work(description):
     # Modify this function only
     from techies import cli as techies_cli
 
-    hierarchy_crew = techies_cli.get_openai_crew('hierarchy_crew_minor')
+    hierarchy_crew = techies_cli.get_openai_crew('hierarchy_crew_v2')
     hierarchy_crew.kickoff(inputs={'game_specifications': description})
     del hierarchy_crew
 
