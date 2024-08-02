@@ -40,6 +40,7 @@ fastapi-cli==0.0.4
 fastavro==1.9.5
 filelock==3.15.4
 flatbuffers==24.3.25
+freesound-python @ git+https://github.com/MTG/freesound-python@5be99a3689d17303c01cb122bbb0d5a96eba04f6
 frozenlist==1.4.1
 fsspec==2024.6.1
 google-api-core==2.19.1
@@ -197,7 +198,7 @@ SQLAlchemy==2.0.31
 starlette==0.37.2
 sympy==1.13.1
 tabulate==0.9.0
-techies @ git+https://github.com/kd-research/Techies@8752d951067f253d74a1bcbc3d8ad00b23927007
+techies @ git+https://github.com/kd-research/Techies@5dadd703ec8faec47da0308494e1e3b432775c94
 tenacity==8.5.0
 termcolor==2.4.0
 threadpoolctl==3.5.0
