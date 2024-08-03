@@ -12,6 +12,10 @@ def llm_work(description):
     hierarchy_crew.kickoff(inputs={'game_specifications': description})
     del hierarchy_crew
 
+    files = set(os.listdir()) - {'game_hierarchy.xml'}
+    for file in files:
+        os.remove(file)
+
     html5_crew = techies_cli.get_openai_crew('html5_crew')
     html5_crew.kickoff()
     del html5_crew
@@ -34,7 +38,5 @@ def generate_game_html(description):
 
 if __name__ == '__main__':
     description = sys.argv[1]
-    data = generate_game_html(description)
-    sys.stdout.buffer.write(data)
-    sys.stdout.flush()
+    llm_work(description)
     sys.exit(0)
