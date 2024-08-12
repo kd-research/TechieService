@@ -198,7 +198,6 @@ SQLAlchemy==2.0.31
 starlette==0.37.2
 sympy==1.13.1
 tabulate==0.9.0
-techies @ git+https://github.com/kd-research/Techies@main
 tenacity==8.5.0
 termcolor==2.4.0
 threadpoolctl==3.5.0

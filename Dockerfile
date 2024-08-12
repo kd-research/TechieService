@@ -67,6 +67,10 @@ COPY requirements.lock /app
 RUN $PYTHON -m pip install --upgrade pip \
     && $PYTHON -m pip install -r requirements.lock
 
+# Perform a daily refresh on the latest techies pip package
+RUN echo $(date) >/dev/null \
+    && $PYTHON -m pip install techies@git+https://github.com/kd-research/Techies@main
+
 COPY . /app
 
 EXPOSE 9452
