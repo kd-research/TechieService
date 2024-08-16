@@ -17,7 +17,7 @@ def llm_work(description):
         os.remove(file)
 
     html5_crew = techies_cli.get_openai_crew('html5_crew')
-    html5_crew.kickoff()
+    html5_crew.kickoff(inputs={'game_specifications': description})
     del html5_crew
 
     with open('game.html', 'rb') as f:
