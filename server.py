@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import re
 import os
 import grpc
 import sys
@@ -14,6 +15,7 @@ from grpc_reflection.v1alpha import reflection
 
 PYTHON = sys.executable
 WORKERPATH = os.path.realpath(os.path.join(os.path.dirname(__file__), 'worker.py'))
+ANSI_ESCAPE_RE = re.compile(r'\x1B[@-_][0-?]*[ -/]*[@-~]')
 
 class CrewGeneratorServicer(pb2_grpc.CrewGeneratorServicer):
     async def GenerateHtmlGame(self, request, _context):
@@ -21,16 +23,26 @@ class CrewGeneratorServicer(pb2_grpc.CrewGeneratorServicer):
             description = request.description
             with TemporaryDirectory() as tmpdir:
                 process = await asyncio.create_subprocess_exec(
-                    PYTHON, WORKERPATH, description, stdout=sys.stdout, stderr=sys.stderr, cwd=tmpdir)
+                    PYTHON, WORKERPATH, description,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.STDOUT,
+                    cwd=tmpdir)
 
-                await process.communicate()
+                stdout, _  = await process.communicate()
+                log = stdout.decode('ascii', errors="ignore")
+                clean_log = ANSI_ESCAPE_RE.sub('', log)
+
+                target_file = os.path.join(tmpdir, 'game.html')
+                if not os.path.exists(target_file):
+                    raise Exception('\n%s' % clean_log)
+
                 with open(os.path.join(tmpdir, 'game.html'), 'rb') as f:
                     data = f.read()
 
                 response = pb2.GenerateHtmlGameResponse(html=pb2.FileResponse(data=data))
             return response
         except Exception as e:
-            traceback.print_exc()
+            # traceback.print_exc()
             raise e
 
 
