@@ -8,4 +8,4 @@ export TECHIES_RUNTIME="$(techies get_runtime_path):`pwd`"
 ## Running techies service in docker
 
 docker build -t techie-service .
-docker run -it --rm -p 9452:9452 -e OPENAI_API_KEY=$OPENAI_API_KEY -e AGENTOPS_API_KEY=$AGENTOPS_API_KEY techie-service
+docker run -it --rm -p 9452:9452 -e OPENAI_API_KEY=$OPENAI_API_KEY -e AGENTOPS_API_KEY=$AGENTOPS_API_KEY FREESOUND_CLIENT_API_KEY=FREESOUND_CLIENT_API_KEY techie-service
