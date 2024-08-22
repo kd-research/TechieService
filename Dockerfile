@@ -1,8 +1,6 @@
 # Use an official Ubuntu base image
 FROM ubuntu:22.04 AS base
 
-ARG TECHIES_TARGET=main
-
 # Set environment variables
 ENV RUBY_VERSION=3.3.3
 ENV PYTHON_VERSION=3.12.4
@@ -68,6 +66,8 @@ COPY requirements.lock /app
 
 RUN $PYTHON -m pip install --upgrade pip \
     && $PYTHON -m pip install -r requirements.lock
+
+ARG TECHIES_TARGET=main
 
 # Perform a daily refresh on the latest techies pip package
 RUN $PYTHON -m pip install techies@git+https://github.com/kd-research/Techies@${TECHIES_TARGET}
