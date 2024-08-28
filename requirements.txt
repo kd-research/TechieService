@@ -1,2 +1,3 @@
 techies @ git+https://github.com/kd-research/Techies@main
 grpcio-reflection==1.62.2
+pybase64==1.4.0

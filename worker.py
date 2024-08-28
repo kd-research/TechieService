@@ -23,7 +23,43 @@ def llm_work(description):
     with open('game.html', 'rb') as f:
         data = f.read()
 
+    # Embed audio files in the HTML content
+    sound_folder = '.'
+    data = embed_audio_base64_in_html(data, sound_folder)
+
     return data
+
+def embed_audio_base64_in_html(html_content, sound_folder):
+    # Read the HTML content
+    #with open(html_file_path, 'r', encoding='utf-8') as file:
+    #    html_content = file.read()
+
+    # Supported audio file extensions
+    audio_extensions = ['.mp3', '.wav']
+
+    # Loop through all files in the sound folder
+    for filename in os.listdir(sound_folder):
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext in audio_extensions:
+            audio_file_path = os.path.join(sound_folder, filename)
+            with open(audio_file_path, 'rb') as audio_file:
+                # Convert the audio file to Base64
+                base64_audio = base64.b64encode(audio_file.read()).decode('utf-8')
+
+            # Determine the MIME type based on the file extension
+            mime_type = f'audio/{file_ext[1:]}'
+
+            # Replace occurrences of the audio file path in the HTML content
+            # This will handle both <audio> tags and any JavaScript code
+            html_content = html_content.replace(filename, f"data:{mime_type};base64,{base64_audio}")
+
+    # Write the modified HTML content back to a new file or overwrite the original file
+    # output_html_file_path = 'output_' + os.path.basename(html_file_path)
+    # with open(output_html_file_path, 'w', encoding='utf-8') as file:
+    #     file.write(html_content)
+    return html_content
+
+
 
 def generate_game_html(description):
     cwd = os.getcwd()
