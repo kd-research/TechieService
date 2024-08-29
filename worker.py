@@ -19,6 +19,7 @@ def llm_work(description):
     for file in files:
         os.remove(file)
 
+    sess = agentops.start_session()
     html5_crew.kickoff(inputs={'game_specifications': description})
     sess.end_session(end_state='Success')
 
