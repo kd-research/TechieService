@@ -27,19 +27,10 @@ def llm_work(description):
 
     del html5_crew
 
-    with open('game.html', 'rb') as f:
-        data = f.read()
-
-    # Embed audio files in the HTML content
-    sound_folder = '.'
-    data = embed_audio_base64_in_html(data, sound_folder)
-
-    return data
-
-def embed_audio_base64_in_html(html_content, sound_folder):
+def embed_audio_base64_in_html(html_file_path, sound_folder):
     # Read the HTML content
-    #with open(html_file_path, 'r', encoding='utf-8') as file:
-    #    html_content = file.read()
+    with open(html_file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
 
     # Supported audio file extensions
     audio_extensions = ['.mp3', '.wav']
@@ -61,13 +52,10 @@ def embed_audio_base64_in_html(html_content, sound_folder):
             html_content = html_content.replace(filename, f"data:{mime_type};base64,{base64_audio}")
 
     # Write the modified HTML content back to a new file or overwrite the original file
-    # output_html_file_path = 'output_' + os.path.basename(html_file_path)
-    # with open(output_html_file_path, 'w', encoding='utf-8') as file:
-    #     file.write(html_content)
-    return html_content
+    with open(html_file_path, 'w', encoding='utf-8') as file:
+        file.write(html_content)
 
-
-
+# Deprecated
 def generate_game_html(description):
     cwd = os.getcwd()
     try:
@@ -82,4 +70,5 @@ def generate_game_html(description):
 if __name__ == '__main__':
     description = sys.argv[1]
     llm_work(description)
+    embed_audio_base64_in_html('game.html', '.')
     sys.exit(0)
