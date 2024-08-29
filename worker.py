@@ -11,17 +11,21 @@ def llm_work(description):
 
     agentops.init(auto_start_session=False)
 
-    sess = agentops.start_session()
-    hierarchy_crew, html5_crew = techies_cli.get_openai_crew(['hierarchy_crew_v2', 'html5_crew'])
+    agentops.start_session()
+    hierarchy_crew = techies_cli.get_openai_crew('hierarchy_crew_v2')
     hierarchy_crew.kickoff(inputs={'game_specifications': description})
+
+    del hierarchy_crew
 
     files = set(os.listdir()) - {'game_hierarchy.xml'}
     for file in files:
         os.remove(file)
 
-    sess = agentops.start_session()
+    agentops.start_session()
+    html5_crew = techies_cli.get_openai_crew('html5_crew')
     html5_crew.kickoff(inputs={'game_specifications': description})
-    sess.end_session(end_state='Success')
+
+    del html5_crew
 
     with open('game.html', 'rb') as f:
         data = f.read()
