@@ -1,6 +1,7 @@
 import agentops
 import sys
 import os
+import base64
 from os import path
 from subprocess import run, DEVNULL
 from tempfile import TemporaryDirectory
