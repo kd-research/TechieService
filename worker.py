@@ -18,7 +18,7 @@ def llm_work(description):
 
     del hierarchy_crew
 
-    files = set(os.listdir()) - {'game_hierarchy.xml'}
+    files = set(os.listdir()) - {'game_hierarchy.xml', 'agentops.log'}
     for file in files:
         os.remove(file)
 
@@ -56,6 +56,27 @@ def embed_audio_base64_in_html(html_file_path, sound_folder):
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(html_content)
 
+def clean_html(file_path, output_path=None):
+    # Load the content of the HTML file
+    with open(file_path, "r") as file:
+        html_content = file.read()
+
+    # Find the starting point of the HTML content
+    start_index = html_content.find("<!DOCTYPE html>")
+    # Find the ending point of the HTML content
+    end_index = html_content.find("</html>") + len("</html>")
+
+    # Extract the content between <!DOCTYPE html> and </html>
+    cleaned_html_content = html_content[start_index:end_index]
+
+    # If output_path is provided, save the cleaned content to a new file
+    if output_path:
+        with open(output_path, "w") as cleaned_file:
+            cleaned_file.write(cleaned_html_content)
+        print(f"Cleaned HTML content saved to {output_path}")
+
+    return cleaned_html_content
+
 # Deprecated
 def generate_game_html(description):
     cwd = os.getcwd()
@@ -72,4 +93,5 @@ if __name__ == '__main__':
     description = sys.argv[1]
     llm_work(description)
     embed_audio_base64_in_html('game.html', '.')
+    clean_html('game.html', 'game.html')
     sys.exit(0)
